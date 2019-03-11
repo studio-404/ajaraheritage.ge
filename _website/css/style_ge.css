@@ -1,0 +1,43 @@
+@font-face {
+	font-family: 'BPGCAPS';
+	src: url('../fonts/BPG Arial Caps 2010.eot');
+	src: local('☺'), url('../fonts/BPG Arial Caps 2010.woff') format('woff'), 
+	url('../fonts/BPG Arial Caps 2010.ttf') format('truetype'), 
+	url('../fonts/BPG Arial Caps 2010.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'BPGARIAL';
+	src: url('../fonts/bpg_arial_2009.eot');
+	src: local('☺'), url('../fonts/bpg_arial_2009.woff') format('woff'), 
+	url('../fonts/bpg_arial_2009.ttf') format('truetype'), 
+	url('../fonts/bpg_arial_2009.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+body,html, *{
+	font-family:BPGARIAL !important;
+}
+
+.SliderMenu a .Title {
+	font-family:BPGCAPS !important;
+}
+
+
+.fa {
+	font-family:FontAwesome !important;
+}
+
+
+.CultureMenu li a {
+	font-family:BPGCAPS !important;
+	/*font-size:12px;*/
+}
+.PageTitle{
+	font-family:BPGCAPS !important;
+	font-size:24px
+	}

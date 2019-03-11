@@ -1,0 +1,362 @@
+@media (max-width:992px) {
+    body,
+    html {
+        padding-right:0;
+        overflow-x:hidden;
+		position:relative;
+		width:100%;
+		max-width:100%;
+		padding-top: 47px;
+    }
+    .Logo {
+    	width: 100%;
+		background-size: 100% auto;
+		background-position: center center;
+    }
+    .LogoColumnd {
+    	width:60%;
+    	display:inline-block;
+    	float:left;
+    }
+ 
+    #Language {display:none;}
+    .VerticalMenuHeader {display:none;}
+	.ContainerPaddingAll{
+		padding-left:15px;
+		padding-right:15px;
+	}
+	.ContainerPaddingLeft {
+		padding:0;
+		padding-right:15px;
+	}
+	.SliderMenu {display:none;}
+
+	.ContactMap,
+	.HomeSlider,
+	.HomeSlider .carousel-inner,
+	.HomeSlider .carousel-inner img {
+		height:200px;
+	}
+
+	.SliderPositionDiv {right:0}
+
+	.TopSocialIcon {display:none;}
+	.SocialIcons .TopSocialIcon {
+		display:block;
+		float:none;
+		color:#fff;
+		
+		margin-top:2.5px;
+	}
+	.SocialIcons .TopSocialIcon a i{
+		color:#fff;
+	}
+
+
+	.carousel-control.left {
+		width:45px;
+		height:45px;
+		top:156px;
+		right:45px;
+	}
+	.carousel-control.right {
+		width:45px;
+		height:45px;
+		top:156px;
+		right:0px;
+		background:#fff url('../img/right2.png') no-repeat center center;
+		text-indent:-9999px;
+	}
+
+/******************************************************************/
+	
+	.MobileHeader {
+		background: #3f468c;
+		height: 25px;
+		position: fixed;
+		z-index: 999999;
+		width: 100%;
+		top:0;
+	}
+	.ShowMenuFull .MobileHeader {
+		z-index:9
+	}
+	.Logo {margin-top:0;}
+	.HeaderDiv {
+		height: auto;
+		position: fixed;
+		background: #fff;
+		top: 0;
+		z-index: 9999;
+		padding-top: 25px;
+	}
+
+	.ShowMenuFull .HeaderDiv {
+		height:100%;
+	}
+	.TopSocialIcon2 {
+		display:none;
+	}
+
+	.MobileHeader .SocialIcons {
+		display:inline-block;
+		float:left;
+		width:50%;
+	}
+	.MobileLanguage {
+		display:inline-block;
+		float:left;
+		width:50%;
+		text-align:right;
+		margin-top:1.5px;
+	}
+
+	.MobileLanguage li {	
+		list-style:none;
+		display:inline-block;
+	}
+	.MobileLanguage li a {
+		display:inline-block;
+		text-transform:uppercase;
+		color:#fff;
+		padding-right:15px;
+	}
+
+	.MobileLanguage li.active a,
+	.MobileLanguage li a:hover {
+		color:#b3b7d5;
+		text-decoration:none;
+	}
+
+
+
+
+
+
+
+	/***************************************************************/
+	.PageTitle {
+		font-size:18pt;
+		padding-top: 15px;
+		padding-bottom: 15px;
+	}
+	.PageTitle a {margin-top:6px; font-size:13px;}
+
+	.NewsList .NewsItem img {
+		height:220px;
+		min-width:100%;
+	}
+
+	#Footer {
+		padding:10px 0 30px 0;
+	}
+
+	.ContactList li, .ContactList li a {
+		font-size:13px;
+	}
+
+	#Footer .col-sm-3 {
+		margin-bottom:20px;
+		width:50%;
+		display:inline-block;
+		float:left;
+		padding:0;
+	}
+
+	.DisplayBlock {
+		width: 100%;
+		height: 1px;
+		display: inline-block;
+	}
+	.CopyDIv {width:100% !important	;}
+	.CopiRight {
+		width: 50%;
+		float: left;
+		display: inline-block;
+		font-size: 13px;
+		padding-right: 15px;
+	}
+	.ByShindi {
+		width:50%;
+		float:left;
+		display:inline-block;
+		text-align:right
+	}
+	.ScrollTop {
+		left: 50%;
+		top: 100%;
+		margin-top: -18px;
+		margin-left: -25px;
+		width: 50px;
+		height: 50px;
+	}
+
+	.SearchFormDiv {
+		display:none;
+	}
+	
+
+	.BlueButton {
+	    height: 50px;
+	    line-height: 50px;
+	    width: 70px;
+	    display: inline-block;
+	    padding-left: 0;
+	    padding-right: 0;
+	    background: #3f468c;
+	    float: right;
+	    color: #fff;
+	    font-family: HelveticaR;
+	    font-size: 16px;
+	    text-transform: uppercase;
+	    border: none;
+	    top: -48px;
+	    position: relative;
+	    text-align: center;
+	    right: -15px;
+	}
+
+	.BlueButton span {display:none;}
+	.BlueButton .fa {
+		padding-right:0
+	}
+	.PageInfoDiv .LeftInfo {
+		padding-left:0
+	}
+
+	.PageInfoDiv .LeftInfo .Text {top:0;}
+	.PageInfoDiv .LeftInfo .Title {bottom:65px;}
+
+	.DoCuMentPage {
+	    display: inline-block;
+	    margin-top: -50px;
+	}
+
+
+	.ContactList {padding-left:0; padding-bottom:20px;}
+	.ContactList li.Title {margin-top:10px;}
+	.SocialIcons a {margin-right:7px;}
+
+/*
+	.PageMoreDIv .col-sm-3 {
+		float:left;
+		display:inline-block;
+		width:40%;
+	}
+	.PageMoreDIv .col-sm-9 {
+		float:left;
+		display:inline-block;
+		width:60%;
+	}
+	.PageMoreDIv {padding-top:0; padding-bottom:0}
+	.PageMoreDIv .Text1 {font-size:12px;}
+	.width_100 {
+		float:left !important;
+		display:inline-block !important;
+		width:100% !important;
+	}
+*/	
+
+	.PageMoreDIv {padding-top:0; padding-bottom:0}
+	.PageMoreDIv .Images {padding:0;}
+	.PageMoreDIv .Image2 {padding:0; margin-bottom:10px;}
+	.PageMoreDIv .Image3 {margin-top:10px; margin-bottom:40px;}
+
+	
+		.LeftMenu {display:none;}
+}
+
+
+
+
+@media (min-width:992px) { 
+	 
+}
+
+
+@media (min-width: 1200px){
+
+
+
+	.MobileHeader {display:none}
+
+	.MobileSearchDiv {
+		display:none;
+	}
+
+
+	.ButtonsDiv {
+		margin-top:-86px;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (min-width: 1024px) {
+
+}
+
+@media (min-width: 1280px) {
+    
+}
+
+@media (min-width: 1366px) {
+    .NewsList .NewsItem img,
+    .GalleryList .GalleryItem img {
+    	height:220px;
+    } 
+}
+
+@media (min-width: 1440px) {
+	.NewsList .NewsItem img,
+	.GalleryList .GalleryItem img {
+    	height:240px;
+    } 
+}
+    
+
+@media (min-width: 1680px) {
+   .NewsList .NewsItem img,
+   .GalleryList .GalleryItem img {
+    	height:260px;
+    }   
+}
+
+@media (min-width: 1920px) {
+    .NewsList .NewsItem img,
+    .GalleryList .GalleryItem img {
+    	height:280px;
+    }   
+}
+
+@media (min-width: 2560px) {
+    .NewsList .NewsItem img,
+    .GalleryList .GalleryItem img {
+    	height:370px;
+    }  
+}
+
+
+
+ 
