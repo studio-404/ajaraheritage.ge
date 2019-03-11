@@ -1,1 +1,1 @@
-"# ajaraheritage.ge" 
+# ajaraheritage.ge
