@@ -1445,6 +1445,12 @@ body {overflow:hidden;}
 	text-decoration:none;
 }
 
+.Button_3.active {
+	background:#3f468c;
+	color:#fff;
+	text-decoration:none;
+}
+
 
 
 
@@ -1706,6 +1712,11 @@ body {overflow:hidden;}
 .MemberBoxItem .Item {
 
 }
+.MemberBoxItem .Item table{ margin: 0; padding: 0; border: 0; width: 100%; }
+.MemberBoxItem .Item table tr{ margin: 0; padding: 0; border: 0; margin-bottom:15px; }
+.MemberBoxItem .Item table tr td{ margin: 0; padding:5px; border: 0; }
+.MemberBoxItem .Item table tr td:first-child{ width:50px; font-family:BPGArialCaps2010Regular; color:#000; font-size:13px; }
+.MemberBoxItem .Item table tr td:last-child{ margin: 0; padding:5px; border: 0; color:#888; font-family:BPGArialCaps2010Regular; font-size:12px; }
 .MemberBoxItem .Item .Percent{
 	width:50px;
 	display:inline-block;

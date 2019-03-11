@@ -156,10 +156,16 @@ class Manager_Pages
 
 
         /* g code start*/
-        echo $this->storage->section["slug"];
+        $tpl["g_members"] = array();
+        $tpl["g_projects"] = array();
         switch($this->storage->section["slug"]){
             case 'registratsia':
-                echo "its registration";
+                $members = "SELECT `id`,`title`, `menutitle`, `description` FROM `".c("table.pages")."` WHERE menuid =49 AND language = '" . l() . "' and visibility = 1 and deleted = 0 ORDER BY postdate DESC;";
+                $tpl["g_members"] = db_fetch_all($members);
+
+
+                $projects = "SELECT `id`,`title`,`image1`,`description` from `".c("table.catalogs")."` WHERE menuid=46 and visibility=1 and deleted=0 and language = '" . l() . "' order by id desc";
+                $tpl["g_projects"] = db_fetch_all($projects);
                 break;
             case 'forgot':
                 echo "its forgot";
