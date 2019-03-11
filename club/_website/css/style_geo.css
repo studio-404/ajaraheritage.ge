@@ -1,0 +1,25 @@
+
+
+
+body,html, *{
+	font-family:BPGARIAL !important;
+}
+
+.SliderMenu a .Title {
+	font-family:BPGCAPS !important;
+}
+
+
+.fa {
+	font-family:FontAwesome !important;
+}
+
+
+.CultureMenu li a {
+	font-family:BPGCAPS !important;
+	/*font-size:12px;*/
+}
+.PageTitle{
+	font-family:BPGCAPS !important;
+	font-size:24px
+	}
