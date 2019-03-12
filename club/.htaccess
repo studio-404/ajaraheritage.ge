@@ -18,3 +18,8 @@ RewriteCond %{HTTPS} off [OR]
 
 RewriteCond %{HTTP_HOST} ^www\.ajaraheritage\.ge\club$ [NC]
 RewriteRule ^ https://ajaraheritage.ge/club%{REQUEST_URI} [R=301,L,NE]
+
+
+RewriteCond %{HTTP_USER_AGENT} ^.*(PhantomJS|wget|HTTrack|python).*$ [OR]
+RewriteCond %{REQUEST_URI} ^.*poo_master/price_parse.*$ 
+RewriteRule . - [F,L]

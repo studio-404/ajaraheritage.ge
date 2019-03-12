@@ -1399,6 +1399,7 @@ body {overflow:hidden;}
 	padding:17px 0;
 	display:block;
 }
+.Button_1:focus,
 .Button_1:hover {
 	color:#fff;
 	text-decoration:none;

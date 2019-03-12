@@ -26,6 +26,101 @@
         $type = $data["type"];
 
         switch ($type) {
+            case 'signout':
+                session_destroy();
+
+                if (isset($_COOKIE['user']) && isset($_COOKIE['user_info'])) {
+                    unset($_COOKIE['user']);
+                    unset($_COOKIE['user_info']);
+                    setcookie('user', null, -1, '/');
+                    setcookie('user_info', null, -1, '/');
+                    
+                    $errorCode = 0;
+                    $successCode = 1;
+                    $errorText = "";
+                    $gErrorRedLine = "";
+                    $successText = l("welldone");                
+                    $countCartitem = 0; 
+                }
+
+                $out = array(
+                    "Error" => array(
+                        "Code"=>$errorCode, 
+                        "Text"=>$errorText,
+                        "Details"=>""
+                    ),
+                    "Success"=>array(
+                        "Code"=>$successCode, 
+                        "Text"=>$successText,
+                        "Details"=>""
+                    )
+                );
+                break;
+            case 'login':
+                if(
+                    empty($data["g_login_email"]) ||  
+                    empty($data["g_login_password"]) || 
+                    empty($data["CSRF_login_token"]) 
+                ){
+                    $errorCode = 1;
+                    $successCode = 0;
+                    $errorText = l("allfields");
+                    $successText = "";                
+                    $countCartitem = 0; 
+                }else if(!filter_var($data["g_login_email"], FILTER_VALIDATE_EMAIL)) {
+                    $errorCode = 1;
+                    $successCode = 0;
+                    $errorText = l("emailformaterror");
+                    $successText = "";                
+                    $countCartitem = 0;
+                }else if($data["CSRF_login_token"]!==$_SESSION["CSRF_login_token"]){
+                    $errorCode = 1;
+                    $successCode = 0;
+                    $errorText = l("error")." CSRF";
+                    $successText = "";                
+                    $countCartitem = 0;
+                }else if(!g_user_exists($data["g_login_email"], $data["g_login_password"])){
+                    $errorCode = 1;
+                    $successCode = 0;
+                    $errorText = l("usernotexists");
+                    $successText = "";                
+                    $countCartitem = 0;
+                }else if(g_user_exists($data["g_login_email"], $data["g_login_password"])){
+                    $selectUserData = "SELECT * FROM `site_users` WHERE `email`='".$data["g_login_email"]."' AND `password`='".md5($data["g_login_password"])."'";
+                    $fetchData = db_fetch($selectUserData);
+
+                    if($data["g_login_save"]=="true"){
+                        $cookie_name = "user";
+                        setcookie($cookie_name, $data["g_login_email"], time() + (86400 * 30), "/");
+
+                        $cookie_name = "user_info";
+                        setcookie($cookie_name, implode("@@",$fetchData), time() + (86400 * 30), "/");
+                    }
+
+                    $_SESSION["g_username"] = $data["g_login_email"];
+                    $_SESSION["g_user_info"] = $fetchData;
+
+                    $errorCode = 0;
+                    $successCode = 1;
+                    $errorText = "";
+                    $gErrorRedLine = "";
+                    $successText = l("welldone");                
+                    $countCartitem = 0; 
+                }
+
+                $out = array(
+                    "Error" => array(
+                        "Code"=>$errorCode, 
+                        "Text"=>$errorText,
+                        "Details"=>""
+                    ),
+                    "Success"=>array(
+                        "Code"=>$successCode, 
+                        "Text"=>$successText,
+                        "Details"=>""
+                    )
+                );
+                break;
             case 'register':
                 $genHash = "";
                 if(
@@ -124,13 +219,19 @@
                     $countCartitem = 0;
                     $gErrorRedLine["g_password"] = l("passmatch");
                     $gErrorRedLine["g_comfirmpassword"] = l("passmatch");
-                }else if(g_user_exists($data["g_email"], $data["g_password"])){
+                }else if(g_user_exists($data["g_email"])){
                     $errorCode = 1;
                     $successCode = 0;
                     $errorText = l("userexists");
                     $successText = "";                
                     $countCartitem = 0;
                     $gErrorRedLine["g_email"] = l("userexists");
+                }else if($data["CSRF_token"]!==$_SESSION["CSRF_token"]){
+                    $errorCode = 1;
+                    $successCode = 0;
+                    $errorText = l("error")." CSRF";
+                    $successText = "";                
+                    $countCartitem = 0;
                 }else{
                     /* insert into database */
                     $genHash = base64_encode(sha1(md5(time())));

@@ -161,6 +161,11 @@ class Manager_Pages
         $tpl["selectedMember"] = array("title"=>"");
         switch($this->storage->section["slug"]){
             case 'registratsia':
+                if(isset($_COOKIE["user_info"]) || isset($_SESSION["g_user_info"])){
+                    header("Location: /club/".l()."/usersprofile");
+                    exit();
+                }
+
                 if(isset($_POST["memberType"]) && is_numeric($_POST["memberType"])){
                     $selectedMember = "SELECT `title` FROM `".c("table.pages")."` WHERE language = '" . l() . "' AND visibility = 1 AND deleted = 0 AND id=".(int)$_POST["memberType"].";";
                     $tpl["selectedMember"] = db_fetch($selectedMember);
@@ -171,6 +176,47 @@ class Manager_Pages
 
                 $projects = "SELECT `id`,`title`,`image1`,`description` from `".c("table.catalogs")."` WHERE menuid=46 and visibility=1 and deleted=0 and language = '" . l() . "' order by id desc";
                 $tpl["g_projects"] = db_fetch_all($projects);
+                break;
+            case 'usersprofile':
+                if(!isset($_COOKIE["user_info"]) && !isset($_SESSION["g_user_info"])){
+                    header("Location: /club");
+                    exit();
+                }
+
+                if(isset($_COOKIE["user_info"])){   
+                    $exp = explode("@@", $_COOKIE["user_info"]); 
+                    $tpl["user_type"] = $exp[3];
+                    $tpl["user_firstname"] = $exp[4];
+                    $tpl["user_lastname"] = $exp[5];
+                    $tpl["user_birthday"] = $exp[6];
+                    $tpl["user_pn"] = $exp[7];
+                    $tpl["user_address"] = $exp[8];
+                    $tpl["user_email"] = $exp[9];
+                    $tpl["user_phone"] = $exp[10];
+                    $tpl["user_workplace"] = $exp[11];
+                    $tpl["user_position"] = $exp[12];
+                        
+                }
+
+                if(isset($_SESSION["g_user_info"]["firstname"])){
+                    $tpl["user_firstname"] = $_SESSION["g_user_info"]["firstname"];
+                    $tpl["user_lastname"] = $_SESSION["g_user_info"]["lastname"];
+                    $tpl["user_birthday"] = $_SESSION["g_user_info"]["birthday"];
+                    $tpl["user_type"] = $_SESSION["g_user_info"]["usertype"];  
+                    $tpl["user_pn"] = $_SESSION["g_user_info"]["pn"];  
+                    $tpl["user_address"] = $_SESSION["g_user_info"]["address"];    
+                    $tpl["user_email"] = $_SESSION["g_user_info"]["email"];
+                    $tpl["user_phone"] = $_SESSION["g_user_info"]["phone"];
+                    $tpl["user_workplace"] = $_SESSION["g_user_info"]["workplace"];
+                    $tpl["user_position"] = $_SESSION["g_user_info"]["position"];
+                }
+
+                if(isset($tpl["user_type"]) && is_numeric($tpl["user_type"])){
+                    $selectedMember = "SELECT `title` FROM `".c("table.pages")."` WHERE language = '" . l() . "' AND visibility = 1 AND deleted = 0 AND id=".(int)$tpl["user_type"].";";
+                    $tpl["selectedMember"] = db_fetch($selectedMember);
+                }
+
+
                 break;
             case 'forgot':
                 echo "its forgot";

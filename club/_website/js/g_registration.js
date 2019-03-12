@@ -8,14 +8,14 @@ if(typeof document.getElementsByClassName("g_button_next_first")[0] !== "undefin
 			if(memberTypeList[i].checked){
 				data.memberType = memberTypeList[i].value;
 			}
-		}
+		};
 
 		var projects = document.getElementsByClassName("g_chosenproject");
 		for(var i = 0; i < projects.length; i++){
 			if(projects[i].checked){
 				data.projects = projects[i].value;
 			}
-		}
+		};
 
 		if(
 			typeof data.memberType !== "undefined" && 

@@ -37,7 +37,7 @@
 <script src="https://ajaraheritage.ge/club/_website/js/slick.js"></script>
 <script src="https://ajaraheritage.ge/club/_website/js/bootstrap-select.js"></script>
 <script src="https://ajaraheritage.ge/club/_website/js/jquery.fancybox.js"></script>
-<script src="https://ajaraheritage.ge/club/_website/js/scripts.js"></script>   
+<script src="https://ajaraheritage.ge/club/_website/js/scripts.js"></script>     
 
 <link href="https://ajaraheritage.ge/club/_website/css/bootstrap.css" rel="stylesheet"/>
 <link href="https://ajaraheritage.ge/club/_website/css/bootstrap-select.css" rel="stylesheet"/>
@@ -58,58 +58,70 @@
 </head>
 <body>
 
+<?php 
+if(!isset($_COOKIE["user"]) && !isset($_SESSION["g_username"])):
+?>
 <div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content"> 
             <div class="modal-body">
                 <div class="ModalHeader">
-                	<span>login</span>
+                	<span><?=l("login")?></span>
                 	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     	<span aria-hidden="true">&times;</span>
                 	</button>
                 </div>
                 <div class="LoginForm">
-					<div class="row FormMargin">
-						<div class="form-group col-sm-12">
-							<div class="InputDiv">
-								<label>name</label>
-								<input type="text" value="Bondo"/>
+                	<form action="" method="post" id="loginForm">
+                		<?php $_SESSION["CSRF_login_token"] = md5(time()); ?>
+                		<input type="hidden" name="CSRF_token" class="CSRF_login_token" value="<?=$_SESSION["CSRF_login_token"]?>" />
+						<div class="row FormMargin">
+							<div class="form-group col-sm-12 g_login_error_box" style="margin: 0; display: none;">
+								<div class="InputDiv">
+									<label class="g_login_error_text" style="text-align: center; font-size: 16px; color: red; padding-bottom: 10px;"></label>
+								</div>
+							</div>
+							<div class="form-group col-sm-12">
+								<div class="InputDiv">
+									<label><?=l("email")?></label>
+									<input type="text" class="g_login_email" value=""/>
+								</div>
+							</div>
+							<div class="form-group col-sm-12">
+								<div class="InputDiv">
+									<label><?=l("password")?></label>
+									<input type="password" class="g_login_password" value="" />
+								</div>
 							</div>
 						</div>
-						<div class="form-group col-sm-12">
-							<div class="InputDiv">
-								<label>password</label>
-								<input type="password"/>
-							</div>
-						</div>
-					</div>
-                	<div class="row">						
-                		<div class="col-sm-12 padding_0">
-                			<div class="form-group col-sm-6">
-		                		<input class="AjaraCheckbox" type="checkbox" id="Cat105">
-								<label class="pull-left Text" for="Cat105">save</label>
-		                	</div>
-		                	<div class="form-group col-sm-6 text-right">
-		                		<a href="<?php echo href('223');?>" class="ForgotPassword">forgot password?</a>
-		                	</div>
-                		</div>
-                		<div class="ModalBUttons">
-                			<div class="form-group col-sm-6">
-		                		<a href="#" class="Button_1">login</a>
-		                	</div>
-		                	<div class="form-group col-sm-6">
-		                		<a href="<?php echo href('222');?>"><div class="Button_2">registration</div></a>
-		                	</div>
-                		</div>
-                	</div>
+	                	<div class="row">						
+	                		<div class="col-sm-12 padding_0">
+	                			<div class="form-group col-sm-6">
+			                		<input class="AjaraCheckbox g_login_save" type="checkbox" id="Cat105" value="1" />
+									<label class="pull-left Text" for="Cat105"><?=l("save")?></label>
+			                	</div>
+			                	<div class="form-group col-sm-6 text-right">
+			                		<a href="<?php echo href('223');?>" class="ForgotPassword"><?=l("forgotpass")?></a>
+			                	</div>
+	                		</div>
+	                		<div class="ModalBUttons">
+	                			<div class="form-group col-sm-6">
+			                		<a href="javascript:void(0)" class="Button_1 g_login_submit"><?=l("login")?></a>
+			                	</div>
+			                	<div class="form-group col-sm-6">
+			                		<a href="<?php echo href('222');?>"><div class="Button_2"><?=l("regisration")?></div></a>
+			                	</div>
+	                		</div>
+	                	</div>
+                	</form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-
+<?php 
+endif;
+?>
 
 <div class="MobileHeader">
 	<div class="SocialIcons">
@@ -135,8 +147,30 @@
 			<div class="col-sm-5 LogoColumnd">
 				<a href="<?php echo href('1');?>" class="Logo"></a>
 			</div>
-			<div class="col-sm-7 TopMenuColumn">	
-				<div class="LoginButton" data-toggle="modal" data-target="#LoginModal">login</div>	
+			<div class="col-sm-7 TopMenuColumn">
+				<?php 
+				if(!isset($_COOKIE["user"]) && !isset($_SESSION["g_username"])):
+				?>	
+				<div class="LoginButton" data-toggle="modal" data-target="#LoginModal"><?=l("login")?></div>
+				<?php endif; ?>	
+				
+
+				<?php 
+				if(isset($_COOKIE["user"]) || isset($_SESSION["g_username"])):
+					$user_firstname = "";
+					if(isset($_COOKIE["user_info"])){
+						$exp = explode("@@", $_COOKIE["user_info"]);
+						$user_firstname = $exp[4];
+					}
+
+					if(isset($_SESSION["g_user_info"]["firstname"])){
+						$user_firstname = $_SESSION["g_user_info"]["firstname"];
+					}
+				?>
+				<div class="LoginButton" onclick="location.href = '/club/<?=l()?>/usersprofile'"><?=$user_firstname?></div>
+				<?php endif; ?>	
+
+
 				<div class="TopSocialIcon2">
 					<a href="<?php echo s('facebook');?>" target="_blank"><i class="fa fa-facebook"></i></a>
 					<a href="<?php echo s('twitter');?>" target="_blank"><i class="fa fa-twitter"></i></a>
@@ -289,6 +323,8 @@
 		</div>
 	</div>
 </div>
+
+<script src="https://ajaraheritage.ge/club/_website/js/g_scripts.js"></script> 
 
 </body>
 </html>
