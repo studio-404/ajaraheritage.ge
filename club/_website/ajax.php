@@ -26,6 +26,209 @@
         $type = $data["type"];
 
         switch ($type) {
+            case 'update-profile-password':
+                if( 
+                    empty($data["g_old_password"]) || 
+                    empty($data["g_password"]) || 
+                    empty($data["g_comfirmpassword"]) 
+                ){
+                    if(empty($data["g_old_password"])){
+                        $gErrorRedLine["g_old_password"] = l("allfields");
+                    }
+
+                    if(empty($data["g_password"])){
+                        $gErrorRedLine["g_password"] = l("allfields");
+                    }
+
+                    if(empty($data["g_comfirmpassword"])){
+                        $gErrorRedLine["g_comfirmpassword"] = l("allfields");
+                    }
+                    
+                    $errorCode = 1;
+                    $successCode = 0;
+                    $errorText = l("allfields");
+                    $successText = "";                
+                    $countCartitem = 0;                
+                }else if(strlen($data["g_password"])<=5) {
+                    $errorCode = 1;
+                    $successCode = 0;
+                    $errorText = l("passwordlengtherror");
+                    $successText = "";                
+                    $countCartitem = 0;
+                    $gErrorRedLine["g_password"] = l("passwordlengtherror");
+                }else if($data["g_password"]!==$data["g_comfirmpassword"]){
+                    $errorCode = 1;
+                    $successCode = 0;
+                    $errorText = l("passmatch");
+                    $successText = "";                
+                    $countCartitem = 0;
+                    $gErrorRedLine["g_password"] = l("passmatch");
+                    $gErrorRedLine["g_comfirmpassword"] = l("passmatch");
+                }else{
+                    $user = "";
+                    if(isset($_COOKIE['user'])){
+                        $user = $_COOKIE['user'];
+                    }
+
+                    if(isset($_SESSION["g_username"])){
+                        $user = $_SESSION["g_username"];
+                    }
+
+                    if(!g_user_exists($user, $data["g_old_password"])){
+                        $errorCode = 1;
+                        $successCode = 0;
+                        $errorText = l("oldpassworderror");
+                        $successText = "";                
+                        $countCartitem = 0;
+                        $gErrorRedLine["g_old_password"] = l("oldpassworderror");
+                    }else{
+                        $updatePassword = "UPDATE `site_users` SET `password`='".md5($data["g_password"])."' WHERE `email`='".$user."'";
+                        db_query($updatePassword);
+
+                        $errorCode = 0;
+                        $successCode = 1;
+                        $errorText = "";
+                        $gErrorRedLine = "";
+                        $successText = l("welldone");                
+                        $countCartitem = 0; 
+                    }                    
+                }
+
+                $out = array(
+                    "Error" => array(
+                        "Code"=>$errorCode, 
+                        "Text"=>$errorText,
+                        "gErrorRedLine"=>$gErrorRedLine,
+                        "Details"=>""
+                    ),
+                    "Success"=>array(
+                        "Code"=>$successCode, 
+                        "Text"=>$successText,
+                        "Details"=>""
+                    )
+                );
+                break;
+            case 'update-profile':
+                if (
+                    isset($_COOKIE['user']) || isset($_SESSION["g_username"])
+                ){
+                    if(
+                        empty($data["g_firstname"]) ||  
+                        empty($data["g_lastname"]) || 
+                        empty($data["g_birthday"]) || 
+                        empty($data["g_personalnumber"]) || 
+                        empty($data["g_address"]) || 
+                        empty($data["g_phone"]) || 
+                        empty($data["g_workplace"]) || 
+                        empty($data["g_position"]) 
+                    ){
+                        if(empty($data["g_firstname"])){
+                            $gErrorRedLine["g_firstname"] = l("allfields");
+                        }
+
+                        if(empty($data["g_lastname"])){
+                            $gErrorRedLine["g_lastname"] = l("allfields");
+                        }
+
+                        if(empty($data["g_birthday"])){
+                            $gErrorRedLine["g_birthday"] = l("allfields");
+                        }
+
+                        if(empty($data["g_personalnumber"])){
+                            $gErrorRedLine["g_personalnumber"] = l("allfields");
+                        }
+
+                        if(empty($data["g_address"])){
+                            $gErrorRedLine["g_address"] = l("allfields");
+                        }
+
+                        if(empty($data["g_phone"])){
+                            $gErrorRedLine["g_phone"] = l("allfields");
+                        }
+
+                        if(empty($data["g_workplace"])){
+                            $gErrorRedLine["g_workplace"] = l("allfields");
+                        }
+
+                        if(empty($data["g_position"])){
+                            $gErrorRedLine["g_position"] = l("allfields");
+                        }
+                        
+                        $errorCode = 1;
+                        $successCode = 0;
+                        $errorText = l("allfields");
+                        $successText = "";                
+                        $countCartitem = 0;                
+                    }else if(preg_match("/^[0-1][0-9]-[0-3][0-9]-[0-9]{4}$/",$data["g_birthday"])!=1){
+                        $errorCode = 1;
+                        $successCode = 0;
+                        $errorText = l("dateformaterror");
+                        $successText = "";                
+                        $countCartitem = 0;
+                        $gErrorRedLine["g_birthday"] = l("dateformaterror");
+                    }else if($data["CSRF_token"]!==$_SESSION["CSRF_token"]){
+                        $errorCode = 1;
+                        $successCode = 0;
+                        $errorText = l("error")." CSRF";
+                        $successText = "";                
+                        $countCartitem = 0;
+                    }else{
+                        $user = "";
+                        if(isset($_COOKIE['user'])){
+                            $user = $_COOKIE['user'];
+                        }
+
+                        if(isset($_SESSION["g_username"])){
+                            $user = $_SESSION["g_username"];
+                        }
+                        // update profile
+                        $update = "UPDATE `site_users` SET                     
+                        `firstname`='".$data["g_firstname"]."',
+                        `lastname`='".$data["g_lastname"]."',
+                        `birthday`='".$data["g_birthday"]."',
+                        `pn`='".$data["g_personalnumber"]."',
+                        `address`='".$data["g_address"]."',
+                        `phone`='".$data["g_phone"]."',
+                        `workplace`='".$data["g_workplace"]."',
+                        `position`='".$data["g_position"]."'
+                        WHERE 
+                        `email`='".$user."'
+                        ";
+                        db_query($update);
+
+                        $selectUserData = "SELECT * FROM `site_users` WHERE `email`='".$user."'";
+                        $fetchData = db_fetch($selectUserData);
+
+                        if(isset($_COOKIE['user_info'])){
+                            $cookie_name = "user_info";
+                            setcookie($cookie_name, implode("@@",$fetchData), time() + (86400 * 30), "/");
+                        }
+                        $_SESSION["g_user_info"] = $fetchData;
+
+
+                        $errorCode = 0;
+                        $successCode = 1;
+                        $errorText = "";
+                        $gErrorRedLine = "";
+                        $successText = l("welldone");                
+                        $countCartitem = 0; 
+                    }
+
+                    $out = array(
+                        "Error" => array(
+                            "Code"=>$errorCode, 
+                            "Text"=>$errorText,
+                            "gErrorRedLine"=>$gErrorRedLine,
+                            "Details"=>""
+                        ),
+                        "Success"=>array(
+                            "Code"=>$successCode, 
+                            "Text"=>$successText,
+                            "Details"=>""
+                        )
+                    );
+                }
+                break;
             case 'signout':
                 session_destroy();
 

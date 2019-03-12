@@ -157,10 +157,9 @@
 							</div>
 						</div>
 						<div class="form-group col-sm-6">
-							<div class="InputDiv"><!-- InputError -->
+							<div class="InputDiv">
 								<label for="g_comfirmpassword"><?=l("comfirmpassword")?></label>
 								<input type="password" id="g_comfirmpassword" value="" />
-								<!-- <div class="ErrorBox">error notification</div> -->
 							</div>
 						</div>
 						<div class="form-group col-sm-12"> 
