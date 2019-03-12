@@ -958,3 +958,14 @@ function searchCatalog($id){
   	  $items=db_fetch("select * from pages where language='".l()."' and id=".$id." order by position");
 	  return $items["visibility"];
   }
+
+function g_user_exists($email, $password = false){
+	$passSql = ($password) ? " AND `password`='".md5($password)."'" : "";
+	$userSql = "SELECT * FROM `site_users` WHERE `email`='".$email."'".$passSql;
+
+	$userFetch = db_fetch($userSql);
+	if(isset($userFetch["id"]) && !empty($userFetch["id"])){
+		return $userFetch;
+	}
+	return false;
+}

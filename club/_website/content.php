@@ -41,6 +41,7 @@
 
 <link href="https://ajaraheritage.ge/club/_website/css/bootstrap.css" rel="stylesheet"/>
 <link href="https://ajaraheritage.ge/club/_website/css/bootstrap-select.css" rel="stylesheet"/>
+<link href="https://ajaraheritage.ge/club/_website/css/bootstrap-datepicker3.min.css" rel="stylesheet"/>
 <link href="https://ajaraheritage.ge/club/_website/css/font-awesome.css" rel="stylesheet"/>
 <link href="https://ajaraheritage.ge/club/_website/css/slick-theme.css" rel="stylesheet"/>
 <link href="https://ajaraheritage.ge/club/_website/css/slick.css" rel="stylesheet"/>
@@ -123,6 +124,7 @@
 		<li<?php echo (l() == 'ge') ? ' class="active"' : '' ?>><a href="<?php echo href($section['id'], array(), 'en', $section['pid']) ?>">EN</a></li>
 		<li<?php echo (l() == 'ge') ? ' class="active"' : '' ?>><a href="<?php echo href($section['id'], array(), 'ge', $section['pid']) ?>">ge</a></li>
 		<li<?php echo (l() == 'ge') ? ' class="active"' : '' ?>><a href="<?php echo href($section['id'], array(), 'ru', $section['pid']) ?>">ru</a></li>
+		<input type="hidden" name="input_lang" id="input_lang" class="input_lang" value="<?=l()?>" />
 	</div>
 </div>
 

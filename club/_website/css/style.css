@@ -2003,6 +2003,7 @@ body {overflow:hidden;}
     left: 100%;
     margin-left: 20px;
     bottom: 0;
+    z-index: 1000;
 }
 .ErrorBox:after {
 	content: '';

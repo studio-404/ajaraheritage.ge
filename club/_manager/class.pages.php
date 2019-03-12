@@ -158,8 +158,13 @@ class Manager_Pages
         /* g code start*/
         $tpl["g_members"] = array();
         $tpl["g_projects"] = array();
+        $tpl["selectedMember"] = array("title"=>"");
         switch($this->storage->section["slug"]){
             case 'registratsia':
+                if(isset($_POST["memberType"]) && is_numeric($_POST["memberType"])){
+                    $selectedMember = "SELECT `title` FROM `".c("table.pages")."` WHERE language = '" . l() . "' AND visibility = 1 AND deleted = 0 AND id=".(int)$_POST["memberType"].";";
+                    $tpl["selectedMember"] = db_fetch($selectedMember);
+                }
                 $members = "SELECT `id`,`title`, `menutitle`, `description` FROM `".c("table.pages")."` WHERE menuid =49 AND language = '" . l() . "' and visibility = 1 and deleted = 0 ORDER BY postdate DESC;";
                 $tpl["g_members"] = db_fetch_all($members);
 

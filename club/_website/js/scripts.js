@@ -1,10 +1,10 @@
 
 
 $(document).ready(function(){
+
 	$('#myCarousel').carousel({
         interval: 4000
     });
-
     // handles the carousel thumbnails
     $('[id^=carousel-selector-]').click( function(){
       var id_selector = $(this).attr("id");
