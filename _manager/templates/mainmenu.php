@@ -157,24 +157,24 @@
                         </li>
 <?php 
 		}
-//		if(getUserRight($_SESSION['auth']["id"], 'userrights')) {
+		if(getUserRight($_SESSION['auth']["id"], 'userrights')) {
 ?>
-                        <!-- <li style="background:none">
+                         <li style="background:none">
                             <div class="submenu">
 								<a href="<?php echo ahref(array('userrights'));?>"><?php echo a("userrights"); ?></a>
                             </div>
-                        </li> -->
+                        </li> 
 <?php
-//		}
-//		if(getUserRight($_SESSION['auth']["id"], 'siteusers')) {
+		}
+		if(getUserRight($_SESSION['auth']["id"], 'siteusers')) {
 ?>
-                        <!-- <li style="background:none">
+                         <li style="background:none">
                             <div class="submenu1">
 								<a href="<?php echo ahref(array('siteusers'));?>"><?php echo a("siteuserlist"); ?></a>
                             </div>
-                        </li> -->
+                        </li> 
 <?php
-//		}
+		}
 ?>
                     </ul>
                 </div>
@@ -186,7 +186,7 @@
                 <div class="sub">
                     <ul>
 <?php 
-	//if(getUserRight($_SESSION['auth']["id"], 'backup')) {
+	if(getUserRight($_SESSION['auth']["id"], 'backup')) {
 ?>
                         <li style="background:none">
                             <div class="submenu">
@@ -194,7 +194,7 @@
                             </div>
                         </li>
 <?php 
-//	}
+	}
 ?>
                         <li style="background:none">
                             <div class="submenu">
