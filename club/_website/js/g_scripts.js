@@ -178,4 +178,104 @@
 		});
 	};
 
+	if(typeof document.getElementsByClassName("g_button_forget_second")[0] !== "undefined"){
+		document.getElementsByClassName("g_button_forget_second")[0].addEventListener("click", () => {
+			var g_email = document.getElementById("g_email");
+			var CSRF_token = document.getElementById("CSRF_token");
+
+			var data = {};
+			data.type = "recover-password";
+			data.g_email = g_email.value;
+			data.CSRF_token = CSRF_token.value;
+
+			var InputDiv = document.getElementsByClassName("InputDiv");
+			var ErrorBox = document.getElementsByClassName("ErrorBox");
+			for(var i = 0; i<InputDiv.length; i++){
+				InputDiv[i].classList.remove("InputError");
+			}
+
+			for(var i = 0; i<ErrorBox.length; i++){
+				ErrorBox[i].remove();
+			}
+
+			var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+			xmlhttp.open("POST", "?ajax=true");
+			xmlhttp.setRequestHeader("Content-Type", "application/json");
+			xmlhttp.onreadystatechange = function() {
+			    if (xmlhttp.readyState === 4) {
+					var resp = JSON.parse(xmlhttp.response);
+			    	if(resp.Error.Code==1){
+			    		var errorFields = resp.Error.gErrorRedLine;
+						for (var item in errorFields) {
+							let errorBox = document.createElement("div"); 
+							errorBox.className = "ErrorBox";
+							errorBox.innerHTML = errorFields[item];
+							let elem = document.getElementById(item).parentElement;
+
+							elem.className += " InputError";
+							elem.appendChild(errorBox); 
+						}
+			    		
+			    	}else if(resp.Success.Code==1){
+			    		document.getElementById("g_recover_form").submit();
+			    	}
+			    };
+			};
+
+			xmlhttp.send(JSON.stringify(data));
+		});
+	};
+
+	if(typeof document.getElementsByClassName("g_button_forget_final")[0] !== "undefined"){
+		document.getElementsByClassName("g_button_forget_final")[0].addEventListener("click", () => {
+			var g_email = document.getElementById("g_email");
+			var g_code = document.getElementById("g_code");
+			var g_newpass = document.getElementById("g_newpass");
+			var CSRF_token = document.getElementById("CSRF_token");
+
+			var data = {};
+			data.type = "recover-password-final";
+			data.g_email = g_email.value;
+			data.g_code = g_code.value;
+			data.g_newpass = g_newpass.value;
+			data.CSRF_token = CSRF_token.value;
+
+			var InputDiv = document.getElementsByClassName("InputDiv");
+			var ErrorBox = document.getElementsByClassName("ErrorBox");
+			for(var i = 0; i<InputDiv.length; i++){
+				InputDiv[i].classList.remove("InputError");
+			}
+
+			for(var i = 0; i<ErrorBox.length; i++){
+				ErrorBox[i].remove();
+			}
+
+			var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+			xmlhttp.open("POST", "?ajax=true");
+			xmlhttp.setRequestHeader("Content-Type", "application/json");
+			xmlhttp.onreadystatechange = function() {
+			    if (xmlhttp.readyState === 4) {
+					var resp = JSON.parse(xmlhttp.response);
+			    	if(resp.Error.Code==1){
+			    		var errorFields = resp.Error.gErrorRedLine;
+						for (var item in errorFields) {
+							let errorBox = document.createElement("div"); 
+							errorBox.className = "ErrorBox";
+							errorBox.innerHTML = errorFields[item];
+							let elem = document.getElementById(item).parentElement;
+
+							elem.className += " InputError";
+							elem.appendChild(errorBox); 
+						}
+			    		
+			    	}else if(resp.Success.Code==1){
+			    		document.getElementById("g_recover_form").submit();
+			    	}
+			    };
+			};
+
+			xmlhttp.send(JSON.stringify(data));
+		});
+	};
+
 })();

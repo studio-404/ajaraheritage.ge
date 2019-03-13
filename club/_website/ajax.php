@@ -26,6 +26,132 @@
         $type = $data["type"];
 
         switch ($type) {
+            case 'recover-password-final':
+                if( 
+                    empty($data["g_email"]) || 
+                    empty($data["g_newpass"]) || 
+                    empty($data["g_code"]) 
+                ){
+                    if(empty($data["g_newpass"])){
+                        $gErrorRedLine["g_newpass"] = l("allfields");
+                    }
+
+                    if(empty($data["g_code"])){
+                        $gErrorRedLine["g_code"] = l("allfields");
+                    }
+                    
+                    $errorCode = 1;
+                    $successCode = 0;
+                    $errorText = l("allfields");
+                    $successText = "";                
+                    $countCartitem = 0;                
+                }else if(strlen($data["g_newpass"])<=5) {
+                    $errorCode = 1;
+                    $successCode = 0;
+                    $errorText = l("passwordlengtherror");
+                    $successText = "";                
+                    $countCartitem = 0;
+                    $gErrorRedLine["g_newpass"] = l("passwordlengtherror");
+                }else{
+                    $check = "SELECT `id` FROM `site_users` WHERE `recovery`='".$data["g_code"]."'";
+                    $fetch = db_fetch($check);
+                    if($fetch){
+                        $update = "UPDATE `site_users` SET `recovery`='', `password`='".md5($data["g_newpass"])."' WHERE `recovery`='".$data["g_code"]."'";
+                        db_query($update);
+
+                        $errorCode = 0;
+                        $successCode = 1;
+                        $errorText = "";
+                        $gErrorRedLine = "";
+                        $successText = l("welldone");                
+                        $countCartitem = 0; 
+                    }else{
+                        $errorCode = 1;
+                        $successCode = 0;
+                        $errorText = l("codewrong");
+                        $successText = "";                
+                        $countCartitem = 0;
+                        $gErrorRedLine["g_code"] = l("codewrong");
+                    }
+                }
+
+                $out = array(
+                    "Error" => array(
+                        "Code"=>$errorCode, 
+                        "Text"=>$errorText,
+                        "gErrorRedLine"=>$gErrorRedLine,
+                        "Details"=>""
+                    ),
+                    "Success"=>array(
+                        "Code"=>$successCode, 
+                        "Text"=>$successText,
+                        "Details"=>""
+                    )
+                );
+                break;
+            case 'recover-password':
+                if( 
+                    empty($data["g_email"]) 
+                ){
+                    if(empty($data["g_email"])){
+                        $gErrorRedLine["g_email"] = l("allfields");
+                    }
+                    
+                    $errorCode = 1;
+                    $successCode = 0;
+                    $errorText = l("allfields");
+                    $successText = "";                
+                    $countCartitem = 0;                
+                }else if(!filter_var($data["g_email"], FILTER_VALIDATE_EMAIL)) {
+                    $errorCode = 1;
+                    $successCode = 0;
+                    $errorText = l("emailformaterror");
+                    $successText = "";                
+                    $countCartitem = 0;
+                    $gErrorRedLine["g_email"] = l("emailformaterror");
+                }else if(!g_user_exists($data["g_email"])){
+                    $errorCode = 1;
+                    $successCode = 0;
+                    $errorText = l("useremailnotexists");
+                    $successText = "";                
+                    $countCartitem = 0;
+                    $gErrorRedLine["g_email"] = l("useremailnotexists");
+                }else{
+                    //send email && insert into db
+                    $uniqid = uniqid().time();
+                    $update = "UPDATE `site_users` SET `recovery`='".$uniqid."' WHERE `email`='".$data["g_email"]."'";
+                    db_query($update);
+
+                    $body = sprintf(l("recoverytext"), $uniqid);
+
+                    g_send_email(array(
+                        "sendTo"=>$data["g_email"],
+                        "subject"=>l("updatepassword"),
+                        "body"=>$body
+                    ));
+
+                    $errorCode = 0;
+                    $successCode = 1;
+                    $errorText = "";
+                    $gErrorRedLine = "";
+                    $successText = l("welldone");                
+                    $countCartitem = 0; 
+                }
+
+                $out = array(
+                    "Error" => array(
+                        "Code"=>$errorCode, 
+                        "Text"=>$errorText,
+                        "gErrorRedLine"=>$gErrorRedLine,
+                        "Details"=>""
+                    ),
+                    "Success"=>array(
+                        "Code"=>$successCode, 
+                        "Text"=>$successText,
+                        "Details"=>""
+                    )
+                );
+                break;
             case 'update-profile-password':
                 if( 
                     empty($data["g_old_password"]) || 

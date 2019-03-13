@@ -219,7 +219,7 @@ class Manager_Pages
 
                 break;
             case 'forgot':
-                echo "its forgot";
+                //echo "its forgot";
                 break;
         }
         /* g code end*/
