@@ -2,6 +2,7 @@ var lang = document.getElementById("input_lang").value;
 
 if(typeof document.getElementsByClassName("g_button_next_first")[0] !== "undefined"){
 	document.getElementsByClassName("g_button_next_first")[0].addEventListener("click", () => {
+		var errorText = document.getElementsByClassName("g_button_next_first")[0].getAttribute("data-error");
 		var data = {};
 		var memberTypeList = document.getElementsByClassName("g_memberType");
 		for(var i = 0; i < memberTypeList.length; i++){
@@ -22,6 +23,8 @@ if(typeof document.getElementsByClassName("g_button_next_first")[0] !== "undefin
 			typeof data.projects !== "undefined"  
 		){
 			document.getElementById("registration_step_one").submit();
+		}else{
+			alert(errorText);
 		}
 	});
 };

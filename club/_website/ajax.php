@@ -208,7 +208,7 @@
                         $countCartitem = 0;
                         $gErrorRedLine["g_old_password"] = l("oldpassworderror");
                     }else{
-                        $updatePassword = "UPDATE `site_users` SET `password`='".md5($data["g_password"])."' WHERE `email`='".$user."'";
+                        $updatePassword = "UPDATE `site_users` SET `password`='".md5(strip_quotes($data["g_password"]))."' WHERE `email`='".$user."'";
                         db_query($updatePassword);
 
                         $errorCode = 0;
@@ -309,14 +309,14 @@
                         }
                         // update profile
                         $update = "UPDATE `site_users` SET                     
-                        `firstname`='".$data["g_firstname"]."',
-                        `lastname`='".$data["g_lastname"]."',
-                        `birthday`='".$data["g_birthday"]."',
-                        `pn`='".$data["g_personalnumber"]."',
-                        `address`='".$data["g_address"]."',
-                        `phone`='".$data["g_phone"]."',
-                        `workplace`='".$data["g_workplace"]."',
-                        `position`='".$data["g_position"]."'
+                        `firstname`='".strip_quotes($data["g_firstname"])."',
+                        `lastname`='".strip_quotes($data["g_lastname"])."',
+                        `birthday`='".strip_quotes($data["g_birthday"])."',
+                        `pn`='".strip_quotes($data["g_personalnumber"])."',
+                        `address`='".strip_quotes($data["g_address"])."',
+                        `phone`='".strip_quotes($data["g_phone"])."',
+                        `workplace`='".strip_quotes($data["g_workplace"])."',
+                        `position`='".strip_quotes($data["g_position"])."'
                         WHERE 
                         `email`='".$user."'
                         ";
@@ -415,7 +415,7 @@
                     $successText = "";                
                     $countCartitem = 0;
                 }else if(g_user_exists($data["g_login_email"], $data["g_login_password"])){
-                    $selectUserData = "SELECT * FROM `site_users` WHERE `email`='".$data["g_login_email"]."' AND `password`='".md5($data["g_login_password"])."'";
+                    $selectUserData = "SELECT * FROM `site_users` WHERE `email`='".strip_quotes($data["g_login_email"])."' AND `password`='".md5(strip_quotes($data["g_login_password"]))."'";
                     $fetchData = db_fetch($selectUserData);
 
                     if($data["g_login_save"]=="true"){
@@ -567,17 +567,17 @@
                     $insertUser = "INSERT INTO `site_users` SET 
                     `registerdate`='".time()."',
                     `registerip`='".$_SERVER["REMOTE_ADDR"]."',
-                    `usertype`='".$data["g_usertype"]."',                    
-                    `firstname`='".$data["g_firstname"]."',
-                    `lastname`='".$data["g_lastname"]."',
-                    `birthday`='".$data["g_birthday"]."',
-                    `pn`='".$data["g_personalnumber"]."',
-                    `address`='".$data["g_address"]."',
-                    `email`='".$data["g_email"]."',
-                    `phone`='".$data["g_phone"]."',
-                    `workplace`='".$data["g_workplace"]."',
-                    `position`='".$data["g_position"]."',
-                    `password`='".md5($data["g_password"])."',
+                    `usertype`='".strip_quotes($data["g_usertype"])."',                    
+                    `firstname`='".strip_quotes($data["g_firstname"])."',
+                    `lastname`='".strip_quotes($data["g_lastname"])."',
+                    `birthday`='".strip_quotes($data["g_birthday"])."',
+                    `pn`='".strip_quotes($data["g_personalnumber"])."',
+                    `address`='".strip_quotes($data["g_address"])."',
+                    `email`='".strip_quotes($data["g_email"])."',
+                    `phone`='".strip_quotes($data["g_phone"])."',
+                    `workplace`='".strip_quotes($data["g_workplace"])."',
+                    `position`='".strip_quotes($data["g_position"])."',
+                    `password`='".md5(strip_quotes($data["g_password"]))."',
                     `hash`='".$genHash."'";
 
                     db_query($insertUser);

@@ -10,32 +10,34 @@
 				</div>
 				<div id="user">
 					<div class="list-top">
-						<div class="check"><?php echo a("active");?></div>
+						<div class="check">ID</div>
 						<div class="name" style="width:300px;padding-left:50px;"><?php echo a("email");?></div>
-						<div class="full" style="width:320px;"><?php echo a("fullname");?></div>
+						<div class="full" style="width:320px;">მომხმარებლის ტიპი</div>
 						<div class="action fix"><?php echo a("actions");?></div>
-						<div class="right" style="width:70px;">ID</div>
-						<div class="right" style="width:160px;">Mobile</div>
+						<!-- <div class="right" style="width:70px;">ID</div> -->
+						<div class="right" style="width:160px;">ტელ.</div>
 					</div>
 <?php
 	$class = 'list';
 	foreach($users as $user) :
 		if($class == 'list2') $class = 'list'; else $class = 'list2';
 		$ch = ($user["active"]=='1') ? '' : 'un';
+
+		$selectedMember = "SELECT `title` FROM `".c("table.pages")."` WHERE language = '" . l() . "' AND visibility = 1 AND deleted = 0 AND id=".(int)$user["usertype"].";";
+        $feUserType = db_fetch($selectedMember);
 ?>
 					<div id="div<?php echo $user['id'] ?>" class="<?php echo $class;?> fix">
 						<div class="check">
-							<a href="javascript:chclick(<?php echo $user['id'];?>);"><img src="_manager/img/buttons/icon_<?php echo $ch;?>visible.png" class="star" title="<?php echo a('tt.visibility');?>" id="img_<?php echo $user['id'];?>" style="width:9px;height:9px;" /></a>
-                            <input type="hidden" name="vis_<?php echo $user['id'];?>" id="vis_<?php echo $user['id'];?>" value="<?php echo $user['active'];?>" />
+							<?php echo $user["id"];?>
                         </div>
 						<div class="name" style="width:300px;padding-left:50px;"><a href="<?php echo ahref(array($route[0], 'edit', $user['id']));?>"><?php echo $user["email"];?></a></div>
-                        <div class="full" style="width:320px;"><?php echo ($user["username"]) ? $user["username"] : 'N/A' ;?></div>
+                        <div class="full" style="width:320px;"><?php echo $feUserType["title"];?></div>
 						<div class="action fix" style="padding-top:6px;">
-							<a href="<?php echo ahref(array($route[0], 'edit', $user['id']));?>"><img src="_manager/img/buttons/icon_edit.png" class="star" title="<?php echo a('ql.editcontent');?>" /></a>
+							<!-- <a href="<?php echo ahref(array($route[0], 'edit', $user['id']));?>"><img src="_manager/img/buttons/icon_edit.png" class="star" title="<?php echo a('ql.editcontent');?>" /></a> -->
 							<a href="javascript:del(<?php echo $user['id'];?>, '<?php echo $user['email'];?>');"><img src="_manager/img/buttons/icon_delete.png" class="star" title="<?php echo a('ql.delete');?>" /></a>
 						</div>
-						<div class="right" style="width:70px;"><?php echo $user["id"];?></div>
-						<div class="right" style="width:160px;"><?php echo $user["mobile"];?></div>
+						<!-- <div class="right" style="width:70px;"><?php echo $user["id"];?></div> -->
+						<div class="right" style="width:160px;"><?php echo $user["phone"];?></div>
 					</div>
 <?php endforeach; ?>
 				</div>

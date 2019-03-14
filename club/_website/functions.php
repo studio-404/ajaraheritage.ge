@@ -1,4 +1,7 @@
 <?php
+function strip_quotes($string){
+	return str_replace(array('"',"'"),'', $string);
+}
 
 function getq($column = array(), $id, $table='pages', $lang=true, $vis=true) {
 	if ($lang)

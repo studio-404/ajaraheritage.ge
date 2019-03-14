@@ -1247,7 +1247,9 @@ class Admin_Manager
     {
         switch ($this->route[1]):
             case 'show':
-                $sql = db_fetch_all("SELECT * FROM `{$table}` WHERE `deleted` = 0 ORDER BY `id` asc LIMIT " . get("start", 0) . ", " . a_s("users.per.page") . ";");
+            	$sq = "SELECT * FROM `{$table}` WHERE `deleted` = 0 ORDER BY `id` asc LIMIT " . get("start", 0) . ", " . a_s("users.per.page") . ";";
+                $sql = db_fetch_all($sq);
+                // echo "<font color='white'>".$list."</font>"; 
                 $cnt = db_fetch("SELECT COUNT(*) AS cnt FROM `{$table}` WHERE `class` = 1 AND `deleted` = 0;");
                 $tpl["users"] = $sql;
 				$tpl["count"] = $cnt["cnt"];

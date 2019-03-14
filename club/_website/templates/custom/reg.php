@@ -223,7 +223,7 @@
 							</div>
 							<div class="col-sm-12 padding_0 text-right MobileStyle2">
 								<a href="javascript:void(0)" class="Button_3 g_button_prev_first"><?=l("prev")?></a>
-								<a href="javascript:void(0)" class="Button_3 g_button_next_first active"><?=l("next")?></a>
+								<a href="javascript:void(0)" class="Button_3 g_button_next_first active" data-error="<?=l("chooseusertypeandproject")?>"><?=l("next")?></a>
 							</div>
 						</div>
 					</form>
